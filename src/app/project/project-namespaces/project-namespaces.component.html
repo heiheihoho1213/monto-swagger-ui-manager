@@ -1,0 +1,51 @@
+<mat-divider></mat-divider>
+
+<div class="flex search" [class.hidden]="!expand">
+  <mat-icon inline class="mr-8">search</mat-icon>
+
+  <input
+    type="text"
+    #inputRef
+    [(ngModel)]="keyword"
+    type="text"
+    placeholder="搜索"
+    class="f-14"
+    tr="search|placeholder"
+  />
+</div>
+
+<mat-divider [class.hidden]="!expand"></mat-divider>
+
+<mat-nav-list class="scroll-y flex-1 project-namespaces hidden-x">
+  <ng-container *ngFor="let namespace of namespaces; let i = index">
+    <mat-list-item
+      class="namespace-item"
+      [id]="ID_PREFIX + i"
+      [class]="{ selected: activedIndex === i, hidden: !namespace.matched }"
+      (click)="select(i)"
+    >
+      <div class="y-center justify-between flex-1">
+        <div class="flex-1">
+          <div class="namespace-name" mat-line [matTooltip]="namespace.name">
+            {{ expand ? namespace.name : namespace.name[0] }}
+          </div>
+
+          <div
+            *ngIf="expand"
+            mat-line
+            [title]="namespace.description"
+            class="sub-title namespace-description"
+          >
+            {{ namespace.description }}
+          </div>
+        </div>
+
+        <app-api-summary
+          *ngIf="namespace.apiItems.length !== 0"
+          [namespaceIndex]="i"
+          [apiItems]="namespace.apiItems"
+        ></app-api-summary>
+      </div>
+    </mat-list-item>
+  </ng-container>
+</mat-nav-list>

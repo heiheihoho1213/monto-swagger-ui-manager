@@ -1,0 +1,38 @@
+@input-width: 465px;
+@input-height: 24px;
+
+@panel-width: 550px;
+@penal-height: 500px;
+
+:host {
+  position: absolute;
+  left: calc(~"50% - @{input-width} / 2");
+
+  mat-list-item {
+    height: 55px !important;
+  }
+}
+
+.search-container {
+  position: relative;
+  top: 2px;
+
+  input {
+    height: @input-height;
+    min-width: @input-width - 11;
+  }
+
+  .triggle {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+  }
+}
+
+::ng-deep .api-search-panel {
+  max-height: @penal-height !important;
+  min-width: @panel-width !important;
+  max-width: initial !important;
+}

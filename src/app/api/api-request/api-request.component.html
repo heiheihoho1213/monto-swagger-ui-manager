@@ -1,0 +1,17 @@
+<div class="api-action">
+  <button
+    mat-stroked-button
+    color="primary"
+    class="outlined px-12"
+    appStopClick
+    (click)="request()"
+    tr="api-try-it-out"
+  >
+    发起请求
+  </button>
+
+  <app-api-request-history
+    *ngIf="showHistory"
+    [apiItem]="apiItem"
+  ></app-api-request-history>
+</div>

@@ -1,0 +1,57 @@
+<div>
+  <app-editor
+    [id]="typeID"
+    [value]="codeString"
+    [minimap]="false"
+    [resize]="resize"
+    (format)="useFoarmatCode($event)"
+  ></app-editor>
+
+  <div class="justify-between y-center py-8">
+    <div class="left pl-16">
+      <mat-slide-toggle
+        color="primary"
+        class="remove-question"
+        [checked]="removeQuestion"
+        [disabled]="showSample"
+        (change)="removeCodeQuestion($event)"
+      >
+        <span tr="api-type-remove-partial">Partial&lt;T&gt; 转 T</span>
+      </mat-slide-toggle>
+
+      <mat-slide-toggle
+        color="primary"
+        class="mx-16 show-sample"
+        [checked]="showSample"
+        (change)="getMockCode($event)"
+      >
+        <span tr="api-type-example">示例</span>
+      </mat-slide-toggle>
+
+      <mat-slide-toggle
+        color="primary"
+        class="fixed-popover"
+        [checked]="fixed"
+        (change)="fixedPopover($event)"
+      >
+        <span tr="fixed">置顶</span>
+      </mat-slide-toggle>
+    </div>
+
+    <div class="right">
+      <button
+        class="copy-code"
+        mat-button
+        color="primary"
+        (click)="copy()"
+        tr="copy"
+      >
+        复制
+      </button>
+
+      <button class="close" mat-button (click)="close()" tr="close-esc">
+        关闭（ESC）
+      </button>
+    </div>
+  </div>
+</div>

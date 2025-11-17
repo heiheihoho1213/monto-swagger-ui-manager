@@ -1,0 +1,71 @@
+<mat-dialog-content *ngIf="apiItem" class="pa-0 ma-0">
+  <div class="url pa-5 xy-center">
+    <app-api-info
+      class="api-info"
+      [api]="apiItem.__info"
+      [showMethod]="false"
+      [showUrl]="false"
+      [copyable]="false"
+    ></app-api-info>
+
+    <div class="y-center url-container">
+      <div
+        class="url-segments y-center mr-10 pl-5"
+        [class.only-one-url]="urlParams.length === 1"
+      >
+        <div class="y-center flex-1 py-1 mr-5">
+          <div class="url-segment-item" *ngFor="let url of urlParams">
+            <span class="url-path f-16" *ngIf="!url.name">{{ url.path }}</span>
+
+            <div class="url-input y-center pr-5" *ngIf="url.name">
+              <input
+                type="text"
+                class="url-value px-5"
+                [(ngModel)]="url.value"
+              />
+
+              <span class="url-name ml-5 sub-title">{{ url.name }}</span>
+            </div>
+          </div>
+        </div>
+
+        <app-api-request-history
+          [fromRequest]="true"
+          [outlined]="false"
+          [apiItem]="apiItem"
+          (selectHistory)="setHistory($event)"
+        ></app-api-request-history>
+      </div>
+
+      <button class="pa-0" cdkFocusInitial style="border: 0">
+        <app-api-method
+          [deprecated]="apiItem.deprecated"
+          [method]="apiItem.__info.method"
+          title="发送请求"
+          tr="api-send-request|title"
+          (click)="doRequest()"
+        ></app-api-method>
+      </button>
+    </div>
+
+    <button
+      class="ml-5 close"
+      tr="close|title"
+      title="关闭"
+      mat-icon-button
+      mat-dialog-close
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="editors flex" *ngIf="editorSize.width">
+    <app-editor
+      #queryEditor
+      [size]="editorSize"
+      [value]="editorValue"
+    ></app-editor>
+
+    <app-editor [size]="editorSize" [value]="response"></app-editor>
+  </div>
+</mat-dialog-content>

@@ -1,0 +1,115 @@
+@methods: get, post, put, delete, patch;
+
+li.deprecated,
+div.deprecated {
+  text-decoration: line-through;
+}
+
+button.method.deprecated {
+  background-color: var(--main-deprecated);
+}
+
+.apiMethod(@methodName, @colorName) {
+  /* API List */
+  .api-item.@{methodName} {
+    box-shadow: none;
+    border: 1px solid ~"var(--main-@{colorName})";
+
+    mat-expansion-panel-header.actived,
+    mat-expansion-panel-header:hover {
+      background-color: ~"var(--main-@{colorName}-hover)" !important;
+    }
+
+    .api-detail {
+      border-top: 1px solid ~"var(--main-@{colorName})";
+    }
+  }
+
+  /* API Method */
+  button.@{methodName} {
+    background-color: ~"var(--main-@{colorName})";
+  }
+
+  /* API TOC */
+  li.@{methodName} {
+    &::first-letter,
+    &:hover,
+    &.actived {
+      color: ~"var(--main-@{colorName})";
+      border-color: ~"var(--main-@{colorName})" !important;
+    }
+
+    span {
+      &::first-letter {
+        color: ~"var(--main-@{colorName})";
+      }
+    }
+
+    span {
+      &::first-letter {
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+    }
+
+    .favorite {
+      border-color: ~"var(--main-@{colorName})" !important;
+    }
+  }
+}
+
+.apiMethod(@methodName, @colorName) {
+  /* API List */
+  .custom-theme .api-item.@{methodName} {
+    box-shadow: none;
+    border: 1px solid ~"var(--theme-@{colorName})";
+
+    mat-expansion-panel-header.actived,
+    mat-expansion-panel-header:hover {
+      background-color: ~"var(--theme-@{colorName}-hover)" !important;
+    }
+
+    .api-detail {
+      border-top: 1px solid ~"var(--theme-@{colorName})";
+    }
+  }
+
+  /* API Method */
+  .custom-theme button.@{methodName} {
+    background-color: ~"var(--theme-@{colorName})";
+  }
+
+  /* API TOC */
+  .custom-theme li.@{methodName} {
+    &::first-letter,
+    &:hover,
+    &.actived {
+      color: ~"var(--theme-@{colorName})";
+      border-color: ~"var(--theme-@{colorName})" !important;
+    }
+
+    span {
+      &::first-letter {
+        color: ~"var(--theme-@{colorName})";
+      }
+    }
+
+    span {
+      &::first-letter {
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+    }
+
+    .favorite {
+      border-color: ~"var(--theme-@{colorName})" !important;
+    }
+  }
+}
+
+.gen-method-style(@i) when (@i < length(@methods) + 1) {
+  .apiMethod(extract(@methods, @i), extract(@methods, @i));
+  .gen-method-style(@i + 1);
+}
+
+.gen-method-style(1);

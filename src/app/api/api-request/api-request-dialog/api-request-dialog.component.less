@@ -1,0 +1,104 @@
+@width: 25px;
+@height: 25px;
+
+:host {
+  mat-dialog-content {
+    max-height: initial !important;
+    overflow: hidden;
+  }
+}
+
+.border {
+  border: 1px solid var(--main-border-grey);
+}
+
+.focus {
+  outline: var(--main-btn-foucs-outline) 1px solid;
+  border: 1px solid transparent;
+}
+
+.header {
+  height: 48px;
+  line-height: 48px;
+  background-color: var(--main-border-primary);
+  border-bottom: 1px solid var(--main-border-primary);
+  opacity: 0.95;
+  color: var(--main-white);
+}
+
+.url {
+  position: relative;
+  border-bottom: 1px solid var(--main-input-border);
+  box-shadow: -1px 1px 2px var(--main-box-shadow);
+  background: var(--main-background-grey);
+
+  .url-container {
+    position: relative;
+    padding: 5px 10px;
+    .border;
+    background: var(--main-white);
+
+    .url-segments {
+      position: relative;
+      min-width: 300px;
+      .border;
+
+      &.only-one-url {
+        &:hover {
+          .focus;
+        }
+      }
+
+      .url-segment-item {
+        position: relative;
+
+        .url-input {
+          .border;
+        }
+
+        .url-value {
+          min-width: 80px;
+          height: @height;
+          border: 1px solid transparent;
+          line-height: @height;
+          font-weight: 400;
+
+          &:focus {
+            .focus;
+          }
+        }
+      }
+    }
+
+    .action {
+      width: @width + 2;
+      height: @height + 2;
+
+      .send-icon {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+}
+
+::ng-deep .api-request-panel {
+  .mat-dialog-container {
+    padding: 0;
+    overflow: hidden;
+    border-radius: 0;
+  }
+}
+
+.api-info {
+  flex: initial;
+}
+
+app-api-request-history {
+  height: 27px;
+  line-height: 27px;
+}
+
+button.close {
+  position: absolute;
+  right: 0;
+}

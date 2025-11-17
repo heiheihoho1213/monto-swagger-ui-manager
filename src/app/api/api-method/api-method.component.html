@@ -1,0 +1,17 @@
+<button
+  *ngIf="showMethod"
+  mat-flat-button
+  class="white f-12 inline-flex align-center justify-center method"
+  [ngClass]="{
+    white: true,
+    'f-12': true,
+    'inline-flex': true,
+    'align-center': true,
+    'justify-center': true,
+    method: true,
+    deprecated: deprecated
+  }"
+  [class]="method"
+>
+  {{ method | uppercase }}
+</button>

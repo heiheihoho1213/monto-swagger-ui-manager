@@ -1,0 +1,40 @@
+@import "flex.less";
+
+:host {
+  .flex;
+  .flex-column;
+}
+
+.search {
+  padding: 6px 12px;
+
+  input {
+    .flex-1;
+    border: 0 !important;
+    outline: none;
+
+    &:focus,
+    &:active {
+      border: 0 !important;
+    }
+  }
+}
+
+mat-list-item {
+  height: 60px !important;
+
+  &.selected {
+    color: var(--main-primary-selected);
+    background-color: var(--main-primary-bg);
+
+    &:hover {
+      background-color: var(--main-primary-hover);
+    }
+  }
+}
+
+.project-namespaces {
+  ::ng-deep .mat-list-item-content {
+    padding-right: 0 !important;
+  }
+}

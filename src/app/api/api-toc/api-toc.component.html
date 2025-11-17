@@ -1,0 +1,128 @@
+<div
+  class="pt-8 toc flex flex-column flex-1-h"
+  [class.expand]="expand"
+  [ngClass]="{
+    'pl-12': expand
+  }"
+>
+  <h3 class="y-center mb-8 fw-normal">
+    <ng-container *ngIf="apiItems?.length">
+      <button
+        disableRipple
+        class="sort-toc"
+        (click)="sortToc()"
+        mat-icon-button
+        title="排序"
+        color="primary"
+        tr="api-sort|title"
+      >
+        <mat-icon>swap_vert</mat-icon>
+      </button>
+
+      <app-hover-menu>
+        <button
+          disableRipple
+          class="sort-toc"
+          [ngClass]="{
+            'mr-8': expand
+          }"
+          mat-icon-button
+          title="过滤"
+          color="primary"
+          trigger
+        >
+          <mat-icon>filter_alt</mat-icon>
+        </button>
+
+        <div menuContent>
+          <div mat-menu-item class="method-item">
+            <mat-checkbox
+              color="primary"
+              appStopClick
+              [checked]="selectAll"
+              [indeterminate]="someSelected()"
+              (change)="selectAllMethod($event.checked)"
+            >
+              全选
+            </mat-checkbox>
+          </div>
+
+          <div
+            class="method-item"
+            mat-menu-item
+            *ngFor="let method of methods; let i = index"
+          >
+            <mat-checkbox
+              color="primary"
+              appStopClick
+              [(ngModel)]="selectedMethods[i]"
+              (ngModelChange)="updateAllComplete()"
+            >
+              {{ method | uppercase }}
+            </mat-checkbox>
+          </div>
+        </div>
+      </app-hover-menu>
+    </ng-container>
+
+    <span *ngIf="expand" class="toc-title text-ellipsis" [matTooltip]="title">
+      {{ title }}
+    </span>
+  </h3>
+
+  <ul class="flex-1-h ma-0 pb-10 scroll-y">
+    <li
+      [class]="api.__info.method"
+      *ngFor="let api of apiItems; let i = index"
+      [ngClass]="{
+        actived: i === activedIndex,
+        'sub-title': true,
+        'mt-4': true,
+        'pr-12': expand,
+        'pl-0': !expand,
+        'pl-4': true,
+        'y-center': true,
+        'x-center': !expand,
+        hidden: !api.matched,
+        deprecated: api.deprecated
+      }"
+      (click)="changeActivedIndex(i)"
+      [id]="ID_PREFIX + i"
+    >
+      <button mat-icon-button *ngIf="expand">
+        <mat-icon
+          appStopClick
+          *ngIf="api.__favorite"
+          (click)="toggleFavorite(i)"
+        >
+          star
+        </mat-icon>
+
+        <mat-icon
+          appStopClick
+          *ngIf="!api.__favorite"
+          (click)="toggleFavorite(i)"
+        >
+          star_border
+        </mat-icon>
+      </button>
+
+      <span
+        class="text-ellipsis"
+        [class.favorite]="!expand && api.__favorite"
+        [matTooltip]="api.__info.description"
+        matTooltipPosition="left"
+      >
+        {{ expand ? api.__info.description : api.__info.description[0] }}
+      </span>
+    </li>
+  </ul>
+
+  <app-toggle-el
+    *ngIf="apiItems?.length"
+    class="mb-5 mr-5 footer"
+    [key]="KEY"
+    [(expand)]="expand"
+    (expandChange)="handleExpand()"
+  ></app-toggle-el>
+</div>

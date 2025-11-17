@@ -1,0 +1,30 @@
+@width: 184px;
+
+:host {
+  margin: 4px 10px 0 0;
+}
+
+.update-url {
+  height: 24px;
+  min-width: @width;
+}
+
+.import-by-local {
+  position: relative;
+
+  .file-input {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 4;
+    font-size: 0;
+    cursor: pointer;
+  }
+}
+
+.import-icon {
+  position: relative;
+  bottom: 1px;
+}
