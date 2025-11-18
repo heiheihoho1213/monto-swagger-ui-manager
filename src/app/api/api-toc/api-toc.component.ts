@@ -18,7 +18,7 @@ export class ApiTocComponent implements OnInit {
 
   KEY = 'TOC';
 
-  WIDTH = ['48px', '256px'];
+  WIDTH = [];
 
   title = '';
 

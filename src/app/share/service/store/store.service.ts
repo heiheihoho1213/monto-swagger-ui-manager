@@ -34,7 +34,7 @@ import { TypeService } from '../type/type.service';
 export class StoreService {
   private projectExit = false;
 
-  private DUMP_KEY = 'SWAGGER_UI_ENHANCE';
+  private DUMP_KEY = 'MONTO_SWAGGER_UI_MANAGER';
 
   private DEAFULT_NAMESPACE = '__default__';
 
@@ -61,7 +61,6 @@ export class StoreService {
 
   private projectSubject$$ = new Subject<StoreData>();
 
-  // TODO
   parseLogs: string[] = [];
 
   sortIndex = 0;
@@ -366,7 +365,7 @@ export class StoreService {
         method,
         url,
         deprecated: api.deprecated,
-        urlForCopy: '`' + url.replace(/\{/gi, '${') + '`',
+        urlForCopy: url.replace(/\{/gi, '${'),
         operationId: api.operationId,
       },
       __favorite: this.favoriteAPI.has(apiId),
@@ -419,8 +418,8 @@ export class StoreService {
   filterNamespace(keyword: string): this {
     this.data.namespaces.filter((namespace) => {
       namespace.matched =
-        namespace.name.includes(keyword) ||
-        namespace.description.includes(keyword);
+        namespace.name.toLowerCase().includes(keyword) ||
+        namespace.description.toLowerCase().includes(keyword);
     });
 
     return this;
@@ -558,9 +557,10 @@ export class StoreService {
     }
 
     const operationId = apiItem.__info.operationId;
+    const url = apiItem.__info.url;
 
     this.data.index.apiIndex = apiIndex;
-    this.location.replaceState(`index#${operationId}-${i}-${j}-${apiIndex}`);
+    this.location.replaceState(`index#${operationId || url}-${i}-${j}-${apiIndex}`);
   }
 
   getIndexFromUrl(): StoreIndex {

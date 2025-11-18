@@ -11,89 +11,48 @@
 <div *ngIf="apiItems.length" class="api-items flex y-center justify-between">
   <!-- <app-api-auth></app-api-auth> -->
 
-  <mat-checkbox
-    class="ml-18"
-    color="primary"
-    [checked]="selectAll"
-    [indeterminate]="someSelected()"
-    (change)="selectAllApi($event.checked)"
-  ></mat-checkbox>
+  <mat-checkbox class="ml-18" color="primary" [checked]="selectAll" [indeterminate]="someSelected()"
+    (change)="selectAllApi($event.checked)"></mat-checkbox>
 
   <div class="flex">
-    <app-hover-menu
-      [closeOnContentClick]="true"
-      [menuClass]="disabled ? 'hidden' : ''"
-    >
-      <button
-        mat-stroked-button
-        color="primary"
-        class="outlined mr-10"
-        trigger
-        title="For Angular"
-        [disabled]="disabled"
-      >
-        代码
+    <app-hover-menu [closeOnContentClick]="true" [menuClass]="disabled ? 'hidden' : ''">
+      <button mat-stroked-button color="primary" class="outlined mr-10" trigger title="For Angular"
+        [disabled]="disabled">
+        Code Generator
       </button>
 
       <div menuContent>
-        <button mat-menu-item (click)="genService()">Service</button>
-
-        <button mat-menu-item (click)="genServiceCall()">Service 调用</button>
+        <button mat-menu-item (click)="genService()">Angular Api Service Generate</button>
+        <button mat-menu-item (click)="genServiceCall()">Angular Api Service Call Generate</button>
+        <button mat-menu-item (click)="genService()">React Api Service Generate</button>
+        <button mat-menu-item (click)="genServiceCall()">React Api Service Call Generate</button>
       </div>
     </app-hover-menu>
 
-    <button
-      mat-stroked-button
-      color="primary"
-      class="outlined expand-all mr-10"
-      (click)="accordion.openAll()"
-      tr="expand-all"
-    >
+    <button mat-stroked-button color="primary" class="outlined expand-all mr-10" (click)="accordion.openAll()"
+      tr="expand-all">
       展开全部
     </button>
 
-    <button
-      mat-stroked-button
-      color="primary"
-      class="outlined close-all"
-      (click)="accordion.closeAll()"
-      tr="close-all"
-    >
+    <button mat-stroked-button color="primary" class="outlined close-all" (click)="accordion.closeAll()" tr="close-all">
       收起全部
     </button>
   </div>
 </div>
 
 <mat-accordion multi hideToggle>
-  <mat-expansion-panel
-    *ngFor="let apiItem of apiItems; let i = index"
-    [id]="ID_PREFIX + i"
-    [ngClass]="{
+  <mat-expansion-panel *ngFor="let apiItem of apiItems; let i = index" [id]="ID_PREFIX + i" [ngClass]="{
       'api-item': true,
       'my-10': true,
       'api-item-actived': i === activedIndex,
       deprecated: apiItem.deprecated,
       hidden: !apiItem.matched
-    }"
-    [class]="apiItem.__info.method"
-    [(expanded)]="expandeds[i]"
-    (click)="updateUrl(i)"
-  >
-    <mat-expansion-panel-header
-      class="pl-0 pr-16"
-      expandedHeight="48px"
-      [class.actived]="i === activedIndex"
-      (mousedown)="recordStart()"
-      (mouseup)="shouldAvoidSelect(i)"
-    >
+    }" [class]="apiItem.__info.method" [(expanded)]="expandeds[i]" (click)="updateUrl(i)">
+    <mat-expansion-panel-header class="pl-0 pr-16" expandedHeight="48px" [class.actived]="i === activedIndex"
+      (mousedown)="recordStart(i)" (mouseup)="shouldAvoidSelect($event, i)">
       <div class="pl-16 y-center justify-between flex-1">
-        <mat-checkbox
-          color="primary"
-          class="mr-16"
-          appStopClick
-          [(ngModel)]="selectedApis[i]"
-          (ngModelChange)="updateAllComplete()"
-        ></mat-checkbox>
+        <mat-checkbox color="primary" class="mr-16" appStopClick [(ngModel)]="selectedApis[i]"
+          (ngModelChange)="updateAllComplete()"></mat-checkbox>
 
         <app-api-info class="flex-1" [api]="apiItem.__info"></app-api-info>
 
@@ -103,18 +62,11 @@
 
     <ng-template matExpansionPanelContent>
       <div class="api-detail flex">
-        <app-api-parameter
-          class="px-10 flex-1"
-          [parameters]="apiItem.parameters"
-          (genId)="setCopyClass($event, apiItem)"
-        ></app-api-parameter>
+        <app-api-parameter class="px-10 flex-1" [parameters]="apiItem.parameters"
+          (genId)="setCopyClass($event, apiItem)"></app-api-parameter>
 
-        <app-api-response
-          class="px-10 flex-1"
-          [responses]="apiItem.responses"
-          [produces]="apiItem.produces"
-          [produce]="apiItem.__produce"
-        ></app-api-response>
+        <app-api-response class="px-10 flex-1" [responses]="apiItem.responses" [produces]="apiItem.produces"
+          [produce]="apiItem.__produce"></app-api-response>
       </div>
     </ng-template>
   </mat-expansion-panel>

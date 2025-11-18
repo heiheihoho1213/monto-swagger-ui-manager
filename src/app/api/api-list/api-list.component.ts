@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { fromEvent } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
@@ -19,6 +19,16 @@ import { ApiItem, ApiParameters } from '../api.model';
 })
 export class ApiListComponent implements OnInit {
   @ViewChild(MatAccordion) accordion!: MatAccordion;
+  // 在 apiItems.length > 0 时设置样式
+  @HostBinding('style.paddingRight') get paddingRight(): string {
+    return this.apiItems.length > 0 ? '220px' : '0';
+  }
+  @HostBinding('style.paddingTop') get paddingTop(): string {
+    return this.apiItems.length > 0 ? '220px' : '0';
+  }
+  @HostBinding('style.height') get height(): string {
+    return '100%';
+  }
 
   apiItems: ApiItem[] = [];
 
@@ -28,7 +38,9 @@ export class ApiListComponent implements OnInit {
 
   activedIndex!: number;
 
-  start!: number;
+  selectionStartIndex: number | null = null;
+
+  expandedStateBeforeSelection?: boolean;
 
   allowKeys = new Set(['KeyU', 'KeyD', 'KeyP']);
 
@@ -47,7 +59,7 @@ export class ApiListComponent implements OnInit {
     private scroll: ScrollInoViewService,
     private copyService: CopyService,
     private typeService: TypeService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.store.getData$().subscribe((data: StoreData) => {
@@ -110,21 +122,37 @@ export class ApiListComponent implements OnInit {
     this.selectAll = this.selectedApis.every(Boolean);
   }
 
-  recordStart(): void {
-    this.start = +new Date();
+  recordStart(index: number): void {
+    this.selectionStartIndex = index;
+    this.expandedStateBeforeSelection = this.expandeds[index];
   }
 
-  shouldAvoidSelect(index: number): void {
-    const end = +new Date();
+  shouldAvoidSelect(event: MouseEvent, index: number): void {
+    const selection = window.getSelection();
+    const hasTextSelection =
+      !!selection && !selection.isCollapsed && selection.toString().trim();
 
-    // Note：避免选择的时候展开/收起手风琴组件
-    if (end - this.start > 200) {
-      // TODO: 优化
-      // Hack
-      // mousedown 一定会触发 click 所以 false -> true -> clikc 后 false
-      // true -> false -> click 后 true
-      this.expandeds[index] = !this.expandeds[index];
+    if (!hasTextSelection) {
+      this.resetSelectionState();
+      return;
     }
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (
+      this.selectionStartIndex === index &&
+      this.expandedStateBeforeSelection !== undefined
+    ) {
+      this.expandeds[index] = this.expandedStateBeforeSelection;
+    }
+
+    this.resetSelectionState();
+  }
+
+  private resetSelectionState(): void {
+    this.selectionStartIndex = null;
+    this.expandedStateBeforeSelection = undefined;
   }
 
   updateUrl(apiIndex: number): void {

@@ -6,6 +6,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  HostBinding,
 } from '@angular/core';
 import * as monaco from 'monaco-editor';
 import { of } from 'rxjs';
@@ -19,6 +20,10 @@ import { IdService } from '../../service';
   styleUrls: ['./editor.component.less'],
 })
 export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
+  // 设置最小高度
+  @HostBinding('style.min-height') minHeight = '400px';
+  @HostBinding('style.max-height') maxHeight = '400px';
+
   private _value!: string;
   @Input() set value(value: string) {
     this._value = value;
@@ -78,13 +83,13 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.editorId = this.idService.genID();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void {
     this.tryInitEditorFail(this.value);
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 
   initEditor(value: string = ''): void {
     const el = document.getElementById(this.editorId);

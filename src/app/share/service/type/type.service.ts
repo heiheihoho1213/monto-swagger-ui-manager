@@ -24,7 +24,7 @@ export class TypeService {
 
   types: Map<string, ApiType> = new Map();
 
-  constructor() {}
+  constructor() { }
 
   getExports(
     projectId: string,
@@ -81,7 +81,6 @@ export class TypeService {
 
   getTypeName(ref: string): string {
     let type = decodeURIComponent(ref.substr(ref.lastIndexOf('/') + 1)).trim();
-
     this.refType = ref.startsWith('#');
 
     if (this.refType) {
@@ -185,7 +184,6 @@ export class TypeService {
     const items = parameter.items;
 
     type = isArray ? '' : this.TYPE_MAP[parameter.type];
-
     if (items) {
       if (items.enum && this.isString(items.type)) {
         return this.getStringEnum(items.enum);
@@ -225,7 +223,6 @@ export class TypeService {
     }
 
     const typeName = this.getTypeName(ref);
-
     if (this.isArray(schema.type)) {
       return typeName + '[]';
     }

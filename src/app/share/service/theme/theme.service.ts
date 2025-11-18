@@ -20,7 +20,7 @@ export class ThemeService {
   }
 
   useLocalTheme(): void {
-    const theme = localStorage.getItem('THEME');
+    const theme = localStorage.getItem('MONTO_SWAGGER_UI_MANAGER_THEME');
 
     if (theme) {
       if (theme === 'dark') {
@@ -49,7 +49,7 @@ export class ThemeService {
 
   saveToLocal(theme: Theme | string): void {
     localStorage.setItem(
-      'THEME',
+      'MONTO_SWAGGER_UI_MANAGER_THEME',
       theme instanceof Theme ? JSON.stringify(theme) : theme
     );
   }

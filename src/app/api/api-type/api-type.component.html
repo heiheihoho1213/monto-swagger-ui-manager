@@ -1,28 +1,16 @@
 <div class="inline-flex align-start">
-  <span
-    class="type-container inline-flex align-center"
-    [class]="parameterID"
-    *appCopy="!!(displayText || refType); selector: parameterID"
-  >
+  <span class="type-container inline-flex align-center" [class]="parameterID"
+    *appCopy="!!(displayText || refType); selector: parameterID">
     <pre class="ma-0 enum-type code f-14" *ngIf="enumType">{{displayText}}</pre>
 
     <span *ngIf="!enumType" class="type-display">{{ displayText }}</span>
 
-    <app-hover-menu
-      *ngIf="refType"
-      menuClass="api-type-hover-panel hidden-x hidden-y"
-      #menu
-      [fixed]="typeHover.fixed"
-      (opened)="lazyGetType()"
-    >
+    <app-hover-menu *ngIf="refType" menuClass="api-type-hover-panel hidden-x hidden-y" #menu [fixed]="typeHover.fixed"
+      (opened)="lazyGetType()">
       <a class="ref-type-name" trigger>{{ type }}</a>
 
-      <app-api-type-hover
-        menuContent
-        [code]="menu.open ? code : ''"
-        (closeMenu)="menu.close()"
-        #typeHover
-      ></app-api-type-hover>
+      <app-api-type-hover menuContent [code]="menu.open ? code : ''" (closeMenu)="menu.close()"
+        #typeHover></app-api-type-hover>
     </app-hover-menu>
   </span>
 </div>

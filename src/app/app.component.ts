@@ -2,18 +2,17 @@ import { AfterViewInit, Component, HostBinding, OnInit } from '@angular/core';
 import { StoreService } from './share/service/store/store.service';
 
 @Component({
-  // eslint-disable-next-line
-  selector: 'swagger-ui-app',
+  selector: 'app-monto-swagger-ui-manager',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less'],
 })
 export class AppComponent implements OnInit, AfterViewInit {
   @HostBinding('class.mat-app-background')
-  title = 'swagger-ui';
+  title = 'monto-swagger-ui-manager';
 
-  constructor(private store: StoreService) {}
+  constructor(private store: StoreService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -24,7 +23,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   parseFiles(fileList: FileList): void {
     for (let i = 0; i < fileList.length; i++) {
       const file = fileList[i];
-      this.store.parseFile(file).finally(() => {});
+      this.store.parseFile(file).finally(() => { });
     }
   }
 }

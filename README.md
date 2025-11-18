@@ -1,7 +1,5 @@
 # Swagger Ui
 
-![Node.js CI](https://github.com/ecuplxd/swagger-ui-enhance/workflows/Node.js%20CI/badge.svg)
-
 # Feat
 See preview part for detail.
 
@@ -69,4 +67,4 @@ Note: `ng test:ci` only for github actions.
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 #
-![ecuplxd](https://img.shields.io/badge/ecuplxd-(●'◡'●)-red.svg)
+![heiheihoho1213](https://img.shields.io/badge/heiheihoho-(●'◡'●)-green.svg)

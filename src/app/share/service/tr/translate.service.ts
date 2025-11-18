@@ -9,7 +9,7 @@ export class TranslateService {
 
   FALLBACK_LOCALE = 'zh-CN';
 
-  STORAGE_KEY = 'locale';
+  STORAGE_KEY = 'MONTO_SWAGGER_UI_MANAGER_LOCALE';
 
   I18N_MARK = 'tr';
 

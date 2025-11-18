@@ -17,7 +17,7 @@ export class ProjectComponent implements OnInit {
 
   selected!: number;
 
-  constructor(private store: StoreService) {}
+  constructor(private store: StoreService) { }
 
   ngOnInit(): void {
     this.store.getData$().subscribe((data) => {

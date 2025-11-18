@@ -28,7 +28,7 @@ export class ImportProjectComponent implements OnInit {
 
   demoUrl = 'https://petstore.swagger.io/v2/swagger.json';
 
-  constructor(private store: StoreService) {}
+  constructor(private store: StoreService) { }
 
   ngOnInit(): void {
     if (this.byUrl) {
@@ -50,7 +50,7 @@ export class ImportProjectComponent implements OnInit {
       return;
     }
 
-    this.store.parseFile(files[0]).finally(() => {});
+    this.store.parseFile(files[0]).finally(() => { });
     this.destroy = true;
 
     of(1)
@@ -69,5 +69,9 @@ export class ImportProjectComponent implements OnInit {
     this.store.fetchProject(this.url).finally(() => {
       this.loading = false;
     });
+  }
+
+  clearUrl(): void {
+    this.url = '';
   }
 }

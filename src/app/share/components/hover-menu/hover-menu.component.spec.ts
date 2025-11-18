@@ -36,9 +36,9 @@ class TestHostComponent implements OnInit {
 
   position = 'bottom';
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  handleOpened(): void {}
+  handleOpened(): void { }
 
   closeMenu(): void {
     this.menu.close();

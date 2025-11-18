@@ -33,7 +33,8 @@ export class ProjectNamespacesComponent implements OnInit, AfterViewInit {
   constructor(
     private store: StoreService,
     private scroll: ScrollInoViewService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.store.getData$().subscribe((data) => {
@@ -62,6 +63,7 @@ export class ProjectNamespacesComponent implements OnInit, AfterViewInit {
   }
 
   filterNamespaces(): void {
-    this.store.filterNamespace(this.keyword);
+    // 不区分大小写模糊匹配
+    this.store.filterNamespace(this.keyword.toLowerCase());
   }
 }

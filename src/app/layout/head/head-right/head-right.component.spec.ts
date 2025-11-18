@@ -48,9 +48,9 @@ describe('HeadRightComponent', () => {
     expect(a).toBeTruthy();
     expect(a.getAttribute('target')).toBe('_blank');
     expect(a.getAttribute('href')).toBe(
-      'https://github.com/ecuplxd/swagger-ui-enhance'
+      'https://github.com/heiheihoho1213/monto-swagger-ui-manager'
     );
-    expect(a.title).toBe('https://github.com/ecuplxd/swagger-ui-enhance');
+    expect(a.title).toBe('https://github.com/heiheihoho1213/monto-swagger-ui-manager');
   });
 
   it('should have change theme el', () => {

@@ -5,8 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ShareModule } from './share';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,4 +17,4 @@ import { ShareModule } from './share';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

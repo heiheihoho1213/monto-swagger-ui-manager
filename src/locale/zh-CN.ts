@@ -30,7 +30,7 @@ export default {
   /* project */
   'project-change': '切换项目',
   'project-import-by-local': '点击导入本地 JSON 文件',
-  'project-import-by-url': '通过 URL 导入已有 API',
+  'project-import-by-url': '通过 json 文件 URL 导入已有 API',
   'project-import-or-update': '导入或进行更新',
   'project-import-tip': '导入 API（仅支持 .json 文件）',
   'project-import-tip-1': '1、可点击左侧加号。',

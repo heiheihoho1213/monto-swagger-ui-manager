@@ -6,13 +6,14 @@ import {
   EventEmitter,
   HostListener,
 } from '@angular/core';
-import { CopyService, IdService } from 'src/app/share/service';
+import { CopyService, IdService, TypeMockService } from 'src/app/share/service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-api-type-hover',
   templateUrl: './api-type-hover.component.html',
   styleUrls: ['./api-type-hover.component.less'],
+  providers: [TypeMockService],
 })
 export class ApiTypeHoverComponent implements OnInit {
   private _code!: string;
@@ -36,7 +37,7 @@ export class ApiTypeHoverComponent implements OnInit {
 
   showSample = false;
 
-  fixed = false;
+  fixed = true;
 
   noQuestionCode = '';
 
@@ -58,11 +59,15 @@ export class ApiTypeHoverComponent implements OnInit {
     }
   }
 
-  constructor(private idService: IdService, private copyService: CopyService) {
+  constructor(
+    private idService: IdService,
+    private copyService: CopyService,
+    private typeMockService: TypeMockService
+  ) {
     this.typeID = this.idService.genID();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   removeCodeQuestion(toggle: MatSlideToggleChange): void {
     if (toggle.checked && !this.noQuestionCode) {
@@ -73,12 +78,12 @@ export class ApiTypeHoverComponent implements OnInit {
     this.codeString = toggle.checked ? this.noQuestionCode : this.code;
   }
 
-  // TODO
+  // 根据声明类型（codeString），生成 mock 数据，（可模拟 mockjs 的生成逻辑）
   getMockCode(toggle: MatSlideToggleChange): void {
     this.showSample = toggle.checked;
 
     if (!this.mockCode) {
-      this.mockCode = '// TODO';
+      this.mockCode = this.typeMockService.buildMockCode(this.code);
     }
 
     if (toggle.checked) {

@@ -78,6 +78,25 @@ export class Tag {
 }
 `;
 
+  const mockCode = `const sample: Pet = {
+  id: 1,
+  category: {
+    id: 1,
+    name: 'string'
+  },
+  name: 'string',
+  photoUrls: [
+    'string'
+  ],
+  tags: [
+    {
+      id: 1,
+      name: 'string'
+    }
+  ],
+  status: 'available'
+};`;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
@@ -170,7 +189,7 @@ export class Tag {
 
     component.getMockCode({ checked: true } as Any);
 
-    expect(component.codeString).toEqual('// TODO', 'use sample code');
+    expect(component.codeString).toEqual(mockCode, 'use sample code');
     expect(component.showSample).toBe(true);
 
     component.getMockCode({ checked: false } as Any);

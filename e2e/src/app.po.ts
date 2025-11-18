@@ -6,6 +6,6 @@ export class AppPage {
   }
 
   getTitleText(): Promise<string> {
-    return element(by.css('swagger-ui-app .content span')).getText() as Promise<string>;
+    return element(by.css('app-monto-swagger-ui-manager .content span')).getText() as Promise<string>;
   }
 }

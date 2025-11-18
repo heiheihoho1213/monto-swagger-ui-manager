@@ -26,7 +26,6 @@ export class LeftNavComponent implements OnInit {
     this.handleExpand();
   }
 
-  // TODO: 优化
   handleExpand(): void {
     const mainEl: HTMLDivElement | null = document.querySelector('.main');
     const apiItemsEl: HTMLDivElement | null = document.querySelector(

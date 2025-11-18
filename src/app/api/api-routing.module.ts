@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ApiComponent } from './api.component';
 
-
-
 const routes: Routes = [
   {
     path: '',
@@ -15,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ApiRoutingModule {}
+export class ApiRoutingModule { }

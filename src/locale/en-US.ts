@@ -43,7 +43,7 @@ export default {
   'api-copy-all-fileds': 'Copy all fields',
   'api-copy-description': 'Copy description',
   'api-copy-url': 'Copy url',
-  'api-field-name': 'Filed name',
+  'api-field-name': 'Field name',
   'api-no-parameters': 'No parameters',
   'api-no-request-histroy': 'No request histroy',
   'api-request-parameters': 'Request rarameters',

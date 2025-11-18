@@ -32,16 +32,15 @@ export class HoverMenuComponent implements OnInit {
 
   timedOutCloser!: number;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   openMenu(trigger: MatMenuTrigger): void {
     if (this.timedOutCloser) {
       clearTimeout(this.timedOutCloser);
     }
-
-    if (!trigger.menuOpen) {
+    if (trigger.menuOpen) {
       this.opened.emit(true);
       this.open = true;
       trigger.openMenu();

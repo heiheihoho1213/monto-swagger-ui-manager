@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-api',
@@ -6,6 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./api.component.less']
 })
 export class ApiComponent implements OnInit {
+  @HostBinding('style.height') height = '100%';
+  @HostBinding('style.display') display = 'flex';
+  // 居中
+  @HostBinding('style.justifyContent') justifyContent = 'center';
+  @HostBinding('style.alignItems') alignItems = 'center';
 
   constructor() { }
 

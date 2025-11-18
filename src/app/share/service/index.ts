@@ -1,5 +1,6 @@
 export * from './store/store.service';
 export * from './type/type.service';
+export * from './type/type-mock.service';
 export * from './id/id.service';
 export * from './copy/copy.service';
 export * from './menu-position/menu-position.service';

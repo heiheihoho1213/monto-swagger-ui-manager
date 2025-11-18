@@ -7,7 +7,7 @@ import { hasClass, Page, StoreServiceStub } from 'src/__test__';
 import { ApiParameters } from '../api.model';
 import { ApiTypeComponent } from './api-type.component';
 
-@Component({selector: 'app-api-type-hover', template: ''})
+@Component({ selector: 'app-api-type-hover', template: '' })
 class ApiTypeHoverStubComponent {
   @Output() closeMenu = new EventEmitter<void>();
 }
