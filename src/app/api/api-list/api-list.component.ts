@@ -248,6 +248,127 @@ ${fnName}(${params}): Observable<${resType}> {
     return service;
   }
 
+  genAxiosService(): string {
+    const codes = this.apiItems
+      .filter((_, index) => this.selectedApis[index])
+      .map((api) => {
+        const {
+          responses,
+          __info: { operationId, method, urlForCopy, description },
+        } = api;
+
+        let resType = 'any';
+        const res200 = (responses[200] as unknown) as ApiParameters;
+
+        if (res200) {
+          resType = this.typeService.getType(res200);
+        }
+
+        const fnName = operationId.replace(/Using.*/, '');
+        const params = this.copyService.getTexts(api.argSelector);
+
+        // 将 Angular 的模板字符串格式转换为 React 的参数格式
+        const reactUrl = urlForCopy.replace(/\$\{/g, '${');
+        const hasParams = params && params.trim().length > 0;
+
+        // 根据请求方法构建 Axios 调用
+        let axiosCall = '';
+        if (hasParams) {
+          if (method === 'get' || method === 'delete') {
+            // GET/DELETE 请求：URL 中可能有路径参数，查询参数通过 config.params 传递
+            // 这里简化处理，假设参数已经在 URL 模板中或作为查询参数
+            axiosCall = `axios.${method}(\`${reactUrl}\`, { params: ${params} })`;
+          } else {
+            // POST/PUT/PATCH 请求：参数作为 data（请求体）
+            axiosCall = `axios.${method}(\`${reactUrl}\`, ${params})`;
+          }
+        } else {
+          axiosCall = `axios.${method}(\`${reactUrl}\`)`;
+        }
+
+        const code = `// ${description}
+export const ${fnName} = async (${hasParams ? params : ''}): Promise<${resType}> => {
+  const response = await ${axiosCall};
+  return response.data;
+};`;
+
+        return code;
+      });
+
+    const service = codes.join('\n\n');
+
+    this.copyService.copy(service);
+
+    return service;
+  }
+
+  genAxiosServiceCall(): string {
+    const codes = this.apiItems
+      .filter((_, index) => this.selectedApis[index])
+      .map((api) => {
+        const {
+          responses,
+          __info: { operationId, method },
+        } = api;
+
+        let resType = 'any';
+        const res200 = (responses[200] as unknown) as ApiParameters;
+
+        if (res200) {
+          resType = this.typeService.getType(res200);
+        }
+
+        const fnName = operationId.replace(/Using.*/, '');
+        const handleFnName = 'handle' + fnName.charAt(0).toUpperCase() + fnName.slice(1);
+        let params = this.copyService.getTexts(api.argSelector);
+
+        if (params) {
+          params = `/* ${params} */`;
+        }
+
+        return method === 'get'
+          ? `const [loading, setLoading] = useState(false);
+const [data, setData] = useState<${resType} | null>(null);
+
+const ${handleFnName} = useCallback(async () => {
+  setLoading(true);
+  try {
+    const result = await ${fnName}(${params});
+    setData(result);
+    // setXxx(result.data);
+  } catch (error) {
+    console.error('Error:', error);
+    // message.error(error.message);
+  } finally {
+    setLoading(false);
+  }
+}, []);`
+          : `const [loading, setLoading] = useState(false);
+const [data, setData] = useState<${resType} | null>(null);
+
+const ${handleFnName} = useCallback(async () => {
+  setLoading(true);
+  try {
+    const result = await ${fnName}(${params});
+    setData(result);
+    // setXxx(result.data);
+    // message.success('操作成功');
+  } catch (error) {
+    console.error('Error:', error);
+    // message.error(error.message || '操作失败');
+  } finally {
+    setLoading(false);
+  }
+}, []);`;
+      });
+
+    const code = codes.join('\n\n');
+
+    this.copyService.copy(code);
+
+    return code;
+  }
+
   setCopyClass(argSelector: string, apiItem: ApiItem): void {
     apiItem.argSelector = argSelector;
   }
