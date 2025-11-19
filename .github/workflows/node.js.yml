@@ -32,13 +32,13 @@ jobs:
       - name: Install and Build
         run: |
           pnpm install
-          pnpm build
+          pnpm build:gh-pages
 
       # 部署
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           # 项目配置的打包目录名称
-          folder: dist
+          folder: docs
           # 部署后提交到的分支
           branch: gh-pages

@@ -57,6 +57,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "baseHref": "/monto-swagger-ui-manager/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
