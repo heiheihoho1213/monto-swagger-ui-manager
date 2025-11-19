@@ -63,5 +63,11 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.4.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "caniuse-lite": "1.0.30001613",
+      "browserslist": "4.24.4"
+    }
   }
 }

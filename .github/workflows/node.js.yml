@@ -1,64 +1,44 @@
-# This workflow will build the Angular project and deploy it to GitHub Pages
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Build and Deploy to GitHub Pages
-
+name: Build and Deploy
+# 监听 master 分支上的 push 事件
 on:
   push:
-    branches: [ dev, main, master ]
-  pull_request:
-    branches: [ dev, main, master ]
-
-# 设置 GITHUB_TOKEN 的权限，允许部署到 GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# 允许一个并发部署
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
+    branches:
+      - dev
 jobs:
   build-and-deploy:
+    # 构建环境使用 ubuntu
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      
-    - name: Install pnpm
-      uses: pnpm/action-setup@v2
-      with:
-        version: 8
-        run_install: false
-        
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18.x'
-        cache: 'pnpm'
-        
-    - name: Install dependencies
-      run: pnpm install --frozen-lockfile
-      
-    - name: Lint
-      run: pnpm run lint
-      
-    - name: Build for GitHub Pages
-      run: pnpm run build:gh-pages
-      
-    - name: Setup Pages
-      uses: actions/configure-pages@v3
-      
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v2
-      with:
-        path: './docs'
-        
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v2
-      # 只在主分支 push 时部署，PR 时只构建不部署
-      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev')
+      # 官方action, 将代码拉取到虚拟机
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      # 安装 pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
+      # 安装node.js
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.18.2"
+
+      # 下载依赖、打包项目
+      - name: Install and Build
+        run: |
+          pnpm install
+          pnpm build
+
+      # 部署
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
+        with:
+          # 项目配置的打包目录名称
+          folder: dist
+          # 部署后提交到的分支
+          branch: gh-pages
