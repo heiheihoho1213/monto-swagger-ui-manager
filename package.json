@@ -5,7 +5,7 @@
     "ng": "ng",
     "dev": "ng serve --proxyConfig=./proxy.config.json --liveReload=false",
     "build": "ng build --prod --aot",
-    "build:gh-pages": "ng build --prod --aot --output-path docs --output-hashing none --base-href /monto-swagger-ui-manager/",
+    "build:gh-pages": "ng build --prod --aot --output-path docs --output-hashing none --base-href /",
     "compodoc": "npx compodoc -p tsconfig.doc.json",
     "test": "ng test --code-coverage",
     "test:ci": "ng test --watch=false --browsers=ChromeHeadlessCustom",
