@@ -9,7 +9,7 @@
       (opened)="lazyGetType()">
       <a class="ref-type-name" trigger>{{ type }}</a>
 
-      <app-api-type-hover menuContent [code]="menu.open ? code : ''" (closeMenu)="menu.close()"
+      <app-api-type-hover menuContent [code]="menu.open ? code : ''" [description]="parameter.description" (closeMenu)="menu.close()"
         #typeHover></app-api-type-hover>
     </app-hover-menu>
   </span>

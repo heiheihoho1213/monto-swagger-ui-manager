@@ -45,8 +45,12 @@ export class TypeService {
     for (const key in type) {
       if (type.hasOwnProperty(key) && !key.startsWith('__')) {
         const required = type.__required[key] ? '' : '?';
+        const description = type.__descriptions?.[key];
 
         mock[key] = this.mock(type[key]);
+        if (description) {
+          exports.push(`  // ${description}`);
+        }
         exports.push(`  ${key}${required}: ${type[key]};`);
       }
     }
@@ -120,6 +124,7 @@ export class TypeService {
           __refTypes: [],
           __refMap2Key: new Map(),
           __mock: {},
+          __descriptions: {},
         };
 
         if (config.required) {
@@ -135,6 +140,9 @@ export class TypeService {
 
             types[definition][filed] = type;
             types[definition].__example[filed] = filedConfig.example || type;
+            if (filedConfig.description) {
+              types[definition].__descriptions![filed] = filedConfig.description;
+            }
 
             if (this.refType) {
               type = this.formalTypeName(type);

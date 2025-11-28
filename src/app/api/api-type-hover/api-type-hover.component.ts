@@ -20,7 +20,7 @@ export class ApiTypeHoverComponent implements OnInit {
   @Input() set code(value: string) {
     if (!this.code && value) {
       this._code = value;
-      this.codeString = value;
+      this.codeString = this.addDescriptionComment(value);
     } else {
       this.resize = !!value;
     }
@@ -28,6 +28,15 @@ export class ApiTypeHoverComponent implements OnInit {
   get code(): string {
     return this._code;
   }
+
+  private addDescriptionComment(code: string): string {
+    if (this.description && this.description.trim()) {
+      return `// ${this.description}\n${code}`;
+    }
+    return code;
+  }
+
+  @Input() description?: string;
 
   @Output() closeMenu = new EventEmitter<void>();
 
@@ -71,11 +80,11 @@ export class ApiTypeHoverComponent implements OnInit {
 
   removeCodeQuestion(toggle: MatSlideToggleChange): void {
     if (toggle.checked && !this.noQuestionCode) {
-      this.noQuestionCode = this.code.replace(/\?:/gi, ':');
+      this.noQuestionCode = this.addDescriptionComment(this.code.replace(/\?:/gi, ':'));
     }
 
     this.removeQuestion = toggle.checked;
-    this.codeString = toggle.checked ? this.noQuestionCode : this.code;
+    this.codeString = toggle.checked ? this.noQuestionCode : this.addDescriptionComment(this.code);
   }
 
   // 根据声明类型（codeString），生成 mock 数据，（可模拟 mockjs 的生成逻辑）
@@ -87,11 +96,11 @@ export class ApiTypeHoverComponent implements OnInit {
     }
 
     if (toggle.checked) {
-      this.codeString = this.mockCode;
+      this.codeString = this.addDescriptionComment(this.mockCode);
       return;
     }
 
-    this.codeString = this.removeQuestion ? this.noQuestionCode : this.code;
+    this.codeString = this.removeQuestion ? this.noQuestionCode : this.addDescriptionComment(this.code);
   }
 
   copy(): void {

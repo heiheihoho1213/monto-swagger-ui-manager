@@ -4,6 +4,7 @@ import {
   AnyObject,
   BoolObject,
   GObject,
+  StringObject,
   StringsObject,
 } from '../share/share.model';
 
@@ -130,6 +131,7 @@ export interface ApiTypeValue {
   __refMap2Key: Map<string, string>;
   __required: BoolObject;
   __mock: AnyObject;
+  __descriptions?: StringObject; // 字段描述信息
 }
 
 export interface Size {
